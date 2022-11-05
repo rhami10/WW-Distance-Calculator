@@ -14,9 +14,9 @@ Keeping the above objective in mind, the project will be split into the followin
 4. Building the PHP file hosting the API that will be used to receive the distance parameters, validate the inputs given and generate the respective response and result.
 5. Setting up the event listener for the form interface that:
 
--   Calls the API hosted in the PHP server file and fetches response
--   Updates users using the feedback panel
--   If successful, displays result back to the user.
+    - Calls the API hosted in the PHP server file and fetches response
+    - Updates users using the feedback panel
+    - If successful, displays result back to the user.
 
 Extra:
 Following testing of the application (and provided there is additional time available) the form can also be styled through SCSS.
