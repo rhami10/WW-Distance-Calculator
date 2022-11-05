@@ -1,74 +1,85 @@
-let METRIC_UNIT = ['Meters', 'Yards']; // Using a singular array variable to populate the form's Select Element options.
+let METRIC_UNIT = ["Meters", "Yards"]; // Using a singular array variable to populate the form's Select Element options.
 
-const form = document.querySelector('calculatorForm');
+const form = document.getElementById("calculatorForm");
 
 if (form) {
 
-    const calcObj = {
-        distanceOneValue: document.getElementById('distanceOneValue'),
-        distanceOneMetric: document.getElementById('distanceOneMetric'),
-        distanceTwoValue: document.getElementById('distanceTwoValue'),
-        distanceTwoMetric: document.getElementById('distanceTwoMetric'),
-        finalDistanceMetric: document.getElementById('finalDistanceMetric')
-    }
-    
-
 	// Populating Select form elements
-	METRIC_UNIT.forEach((metricText) => {
-		var newOption = document.createElement('option');
-		newOption.textContent = metricText;
-		newOption.value = metricText;
+	for (let i = 1; i <= METRIC_UNIT.length; i++) {
+		var newOption = document.createElement("option");
+		newOption.textContent = METRIC_UNIT[i - 1];
+		newOption.value = i;
 
-		calcObj.distanceOneMetric.appendChild(newOption);
-		calcObj.distanceTwoMetric.appendChild(newOption);
-		calcObj.finalDistanceMetric.appendChild(newOption);
-	});
+		document.getElementById("distanceOneMetric").appendChild(newOption);
+		document.getElementById("distanceTwoMetric").appendChild(newOption.cloneNode(1));
+		document.getElementById("finalDistanceMetric").appendChild(newOption.cloneNode(1));
+	}
 
-	form.addEventListener('submit', function (evt) {
+	form.addEventListener("submit", function (evt) {
 		evt.preventDefault();
 		getFinalDistance();
 	});
 }
 
 // Call and fetch the final distance result from the PHP function.
-getFinalDistance() {
-    fetch('//localhost/DistanceCalculator/distances-api', {
-        method: 'POST',
-        body: JSON.stringify(calcObj),
-        header: {
-            'Content-type': 'application/json'
-        }
-    })
-    .then((response) => response.json())
-    .then((data) => {
-        if(data.success) {
-            // Update the results panel with the new value;
-            document.getElementById('finalDistanceValue').innerHTML = data.final_distance;
-            updateFeedbackPanel(true, null, null);
-        }
-        else {
-            document.getElementById('finalDistanceValue').innerHTML = "";
-            updateFeedbackPanel(false, data.feedback_title, data.feedback_description);
-        }
-    });
+function getFinalDistance() {
+
+	const getSelectedText = (element) => {
+		return element.options[element.selectedIndex].text;
+	}
+
+	// Build data object to be posted to PHP function
+	var data = {
+		distanceOneValue: document.getElementById("distanceOneValue").value,
+		distanceOneMetric: getSelectedText(document.getElementById("distanceOneMetric")),
+		distanceTwoValue: document.getElementById("distanceTwoValue").value,
+		distanceTwoMetric: getSelectedText(document.getElementById("distanceTwoMetric")),
+		finalDistanceMetric: getSelectedText(document.getElementById("finalDistanceMetric"))
+	}
+
+	fetch('//localhost/DistanceCalculator/distances-api.php', {
+		method: 'POST',
+		body: JSON.stringify(data),
+		header: {
+			'Content-Type': 'application/json',
+		}
+	})
+	.then((response) => response.json())
+	.then((data) => {
+		if (data.success) {
+			// Update the results panel with the new value;
+			document.getElementById("finalDistanceValue").innerHTML = data.final_distance;
+		} else {
+			document.getElementById("finalDistanceValue").innerHTML = "";
+			
+		}
+
+		updateFeedbackPanel(
+			data.success,
+			data.feedback_title,
+			data.feedback_description
+		);
+	})
+	.catch((error) => {
+		console.error("Error: ", error);
+	});
 }
 
 // Update the Feedback panel.
-updateFeedbackPanel(success, title, description) {
+function updateFeedbackPanel(success, title, description) {
+	var textColor, panelColor;
 
-    var textColor, panelColor;
+	if (success) {
+		textColor = "#365E3D";
+		panelColor = "#D6F5DB";
+	} else {
+		textColor = "#660000";
+		panelColor = "#F5D9BC";
+	}
 
-    if(success) {
-        textColor = "#365E3D";
-        panelColor = "#D6F5DB";
-    } else {
-        textColor = "#660000";
-        panelColor = "#F5D9BC";
-    }
-
-    document.getElementById('feedbackTitle').innerHTML = title;
-    document.getElementById('feedbackText').innerHTML = description;
-    document.getElementById('feedback-panel').style.backgroundColor = panelColor;
-    document.getElementById('feedbackTitle').style.color = textColor;
-    document.getElementById('feedbackText').style.color = textColor;
+	document.getElementById("feedbackTitle").innerHTML = title;
+	document.getElementById("feedbackText").innerText = description;
+	document.getElementById("feedbackTitle").style.color = textColor;
+	document.getElementById("feedbackText").style.color = textColor;
+	document.getElementById("feedback-panel").style.backgroundColor = panelColor;
 }
