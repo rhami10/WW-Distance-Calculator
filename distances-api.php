@@ -50,4 +50,27 @@
             return $distanceOneValue + $distanceTwoValue;
         }
     }
+
+    function initialSetCheck () {
+        $isValid;
+
+        foreach ($fieldIds as $fieldId) {
+            $isValid = (isset($_POST[$fieldId]) && $_POST[$fieldId]!="")
+            if($isValid) return false;
+        }
+        return true;
+    }
+
+    function sendResponse($success, $finalDistance, $feedbackTitle, $feedbackDescription) {
+        
+        $response;
+
+        if($success)
+            $response = array('success' => $success, 'feedback_title' => $feedbackTitle, 'feedback_description' => $feedbackDescription);
+        else
+            $response = array('success' => $success, 'final_distance' => $finalDistance);
+        
+        echo json_encode($response);
+    }
+    
 ?>
