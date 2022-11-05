@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>WW Distance Calculator</title>
+
+    <!-- Importing Bootstrap CDN for styling -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+</head>
+
+<body>
+
+    <div class="main-app">
+        <!-- Feedback panel will be used to provide users with information regarding errors encountered. -->
+        <div class="feedback-panel">
+            <h3 id="feedbackTitle">Run the program.</h3>
+            <p id="feedbackText">Fill in the distances and click on 'Calculate' to generate the value.</p>
+        </div>
+
+        <!-- Form receiving all user inputs. -->
+        <form id="calculatorForm">
+
+            <!-- Components for first distance. -->
+            <input type="number" class="form-control" id="distanceOneValue" placeholder="Distance 1">
+            <select class="form-select" id="distanceOneMetric" aria-label="Distance one metric"></select>
+
+            <!-- Components for second distance. -->
+            <input type="number" class="form-control" id="distanceTwoValue" placeholder="Distance 2">
+            <select class="form-select" id="distanceTwoMetric" aria-label="Distance one metric"></select>
+
+            <!-- Components to receive user input on metric for final result-->
+            <h5>Final Result Unit:</h5>
+            <select class="form-select" id="finalDistanceMetric" aria-label="Distance one metric"></select>
+
+            <button type="submit" class="btn btn-primary">Calculate</button>
+
+        </form>
+
+        <div class="resultPanel">
+            <h2 id="finalDistanceValue"></h2>
+        </div>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
