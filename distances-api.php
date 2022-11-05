@@ -72,5 +72,23 @@
         
         echo json_encode($response);
     }
+
+
+    // Main program initialising a new Calculator Object and calling all methods required for the calculation.
+
+    if(initialSetCheck == true) {
+
+        $calculator = new Calculator($_POST($fieldIds[0]), $_POST($fieldIds[1]), $_POST($fieldIds[2]), $_POST($fieldIds[3]), $_POST($fieldIds[4]))
+
+        if($calculator->validateDistanceValues) {
+            sendResponse(true, $calculator->calculateFinalDistance(), "Success", "Results generated!")
+        } 
+        else {
+            sendResponse(false, null, "Invalid Inputs", "Distance values are invalid.")
+        }
+
+    } else {
+        sendResponse(false, null, "Missing Values", "Please make sure all input fields are set.")
+    } 
     
 ?>
