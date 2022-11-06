@@ -13,7 +13,7 @@
 
 <body>
 
-    <div class="main-app">
+    <div class="p-2 w-50 main-app">
         <!-- Feedback panel will be used to provide users with information regarding errors encountered. -->
         <div id="feedback-panel">
             <h3 id="feedbackTitle">Run the program.</h3>
@@ -27,19 +27,26 @@
             <input type="number" step="0.001" min=0 class="form-control" id="distanceOneValue" placeholder="Distance 1">
             <select class="form-select" id="distanceOneMetric" aria-label="Distance one metric"></select>
 
+            <br />
+
             <!-- Components for second distance. -->
             <input type="number" step="0.001" min=0 class="form-control" id="distanceTwoValue" placeholder="Distance 2">
             <select class="form-select" id="distanceTwoMetric" aria-label="Distance one metric"></select>
+
+            <br />
 
             <!-- Components to receive user input on metric for final result-->
             <h5>Final Result Unit:</h5>
             <select class="form-select" id="finalDistanceMetric" aria-label="Distance one metric"></select>
 
+            <br />
+
             <button type="submit" class="btn btn-primary">Calculate</button>
 
         </form>
 
-        <div class="resultPanel">
+        <div class="py-4 resultPanel">
+            <h2>Result: </h2>
             <h2 id="finalDistanceValue"></h2>
         </div>
     </div>
