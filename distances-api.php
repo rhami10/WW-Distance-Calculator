@@ -1,8 +1,5 @@
 <?php
 
-    ini_set("display_errors",1);
-    error_reporting(E_ALL);
-
     header('Access-Control-Allow-Origin: *');
     header('Access-Control-Allow-Methods: GET, POST');
     header('Access-Control-Allow-Headers: *');
@@ -10,8 +7,7 @@
 
     $fieldIds = ['distanceOneValue', 'distanceOneMetric', 'distanceTwoValue', 'distanceTwoMetric', 'finalDistanceMetric'];
 
-    
-    // 
+    // An initial check is done to ensure all received parameters are valid.
     function initialSetCheck() {
         $isValid;
 
@@ -26,7 +22,7 @@
         return true;
     }
 
-    //
+    // Returns a JSON response that includes feedback components and if successful, the final distance result.
     function sendResponse($success, $finalDistance, $feedbackTitle, $feedbackDescription) {
         
         $response;
@@ -36,10 +32,10 @@
         else
             $response = array('success' => $success, 'feedback_title' => $feedbackTitle, 'feedback_description' => $feedbackDescription);
         
-            echo json_encode($response);
+        echo json_encode($response);
     }
 
-    //
+    // Called to convert any value to the final result metric and subsequently returns the two values added together. 
     function calculateFinalDistance($d1_value, $d1_metric, $d2_value, $d2_metric, $final_metric) {
             
         if($final_metric == 'Meters') {

@@ -4,7 +4,7 @@ const form = document.getElementById("calculatorForm");
 
 if (form) {
 
-	// Populating Select form elements
+	// Populating the options for the select form elements.
 	for (let i = 1; i <= METRIC_UNIT.length; i++) {
 		var newOption = document.createElement("option");
 		newOption.textContent = METRIC_UNIT[i - 1];
@@ -15,6 +15,7 @@ if (form) {
 		document.getElementById("finalDistanceMetric").appendChild(newOption.cloneNode(1));
 	}
 
+	// Adding a new event listener to call the main function GetFinalDistance() whenever the user presses the 'Calculate' button.
 	form.addEventListener("submit", function (evt) {
 		evt.preventDefault();
 		getFinalDistance();
